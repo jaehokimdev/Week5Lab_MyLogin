@@ -19,10 +19,11 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        
-        String loginUser = (String)session.getAttribute("loginUser.username");
-        System.out.println(loginUser+ "    aaaaaa");
-        getServletContext().getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
+        if (session.getAttribute("loginUser") != null) {
+             getServletContext().getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("login");
+        }
 
     }
 
